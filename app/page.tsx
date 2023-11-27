@@ -1,5 +1,4 @@
 
-import type { InferGetStaticPropsType, GetStaticProps, GetStaticPathsContext } from 'next'
 import Movies from './Movies' 
 
 type Repo = {
@@ -9,18 +8,9 @@ type Repo = {
   release_date: string
 }
  
-export const getStaticProps = (async () => {
+export default async function Home() {
   const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_API_KEY}`)
   const repo = await res.json()
-  return { props: { repo } }
-}) satisfies GetStaticProps<{
-  repo: Repo
-}>
- 
-
-
-export default function Home({repo,}: InferGetStaticPropsType<typeof getStaticProps>) {
-  
   console.log(repo.results)
 
   return ( 
